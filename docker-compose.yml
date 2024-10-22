@@ -1,0 +1,83 @@
+version: '3'
+services:
+  
+  config-server:
+    build:
+      context: ./config-server
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+    networks:
+      - spring-cloud-net
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    restart: always
+
+  eureka-server:
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - config-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    restart: always
+
+  gateway-server:
+    build:
+      context: ./gateway-server
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - config-server
+      - eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_GATEWAY=DEBUG
+    restart: always
+      
+  micro-cursos:
+    build:
+      context: ./micro-cursos
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - config-server
+      - eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    restart: always
+
+  micro-estudiantes:
+    build:
+      context: ./micro-estudiantes
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - config-server
+      - eureka-server
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    restart: always
+  
+networks:
+  spring-cloud-net:
+    driver: bridge
+
+

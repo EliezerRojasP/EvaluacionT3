@@ -18,20 +18,19 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true  # Habilita el descubrimiento de servicios vía Eureka
+          enabled: true  
       routes:
-        - id: courses-ms
-          uri: lb://courses-ms  # Load balancing hacia el servicio de cursos
+        - id: cursos-service
+          uri: lb://micro-cursos 
           predicates:
-            - Path=/courses/**  # Todas las rutas que empiecen con /courses serán redirigidas al servicio de cursos
-
-        - id: students-ms
-          uri: lb://students-ms  # Load balancing hacia el servicio de estudiantes
+            - Path=/cursos/**  
+        - id: estudiantes-service
+          uri: lb://micro-estudiantes  
           predicates:
-            - Path=/students/**  # Todas las rutas que empiecen con /students serán redirigidas al servicio de estudiantes
+            - Path=/estudiantes/** 
 
   config:
-    import: "optional:configserver:"  # Importa el Config Server si está habilitado
+    import: "optional:configserver:"  
 
 
 
