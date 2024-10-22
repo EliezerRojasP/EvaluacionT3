@@ -1,17 +1,44 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+
 spring:
   application:
     name: gateway-server
+
   cloud:
     gateway:
       discovery:
         locator:
-          enabled: true
-    eureka:
-      client:
-        serviceUrl:
-          defaultZone: http://localhost:8761/eureka/
-        register-with-eureka: true
-        fetch-registry: true
+          enabled: true  # Habilita el descubrimiento de servicios vía Eureka
+      routes:
+        - id: courses-ms
+          uri: lb://courses-ms  # Load balancing hacia el servicio de cursos
+          predicates:
+            - Path=/courses/**  # Todas las rutas que empiecen con /courses serán redirigidas al servicio de cursos
+
+        - id: students-ms
+          uri: lb://students-ms  # Load balancing hacia el servicio de estudiantes
+          predicates:
+            - Path=/students/**  # Todas las rutas que empiecen con /students serán redirigidas al servicio de estudiantes
+
+  config:
+    import: "optional:configserver:"  # Importa el Config Server si está habilitado
+
+
+
+
+
+
+
 
 
 
