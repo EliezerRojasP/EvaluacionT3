@@ -6,5 +6,5 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/EliezerRojasP/EvaluacionT3/tree/T3
+          uri: https://github.com/EliezerRojasP/EvaluacionT3
           clone-on-start: true
