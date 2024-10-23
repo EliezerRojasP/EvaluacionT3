@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Micro.Estudiantes.entidades.Estudiante;
 import com.Micro.Estudiantes.repositorio.EstudianteRepository;
 import com.Micro.Estudiantes.service.EstudianteService;
 
@@ -20,14 +21,19 @@ public class OAuth2Controller {
    @Autowired
    private EstudianteRepository estudianteRepository;
    
-   @GetMapping("loginSuccess")
+   @GetMapping("/loginSuccess")
    public String loginSuccess(OAuth2AuthenticationToken token){
-	   String correo = token.getPrincipal().getAttribute("correo");
-	   String nombre = token.getPrincipal().getAttribute("nombre");
+	   String email = token.getPrincipal().getAttribute("email");
+	   String name = token.getPrincipal().getAttribute("name");
 	   
-	   estudianteService.registerOAuthEstudiante(correo, nombre);
+	   Estudiante estudianteExistente = estudianteRepository.findByEmail(email);
 	   
-	   String jwtToken = estudianteService.generateToken(correo);
+	   if(estudianteExistente == null) {
+		   estudianteService.registerOAuthEstudiante(email, name);
+	   }
+	   
+	   
+	   String jwtToken = estudianteService.generateToken(email);
 	   
 	   return "Inicie sesión exitosamente. Ficha JWT: " + jwtToken;
    }

@@ -32,6 +32,23 @@ spring:
   config:
     import: "optional:configserver:"  
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  
+  endpoint:
+    health:
+      show-details: always  
+  health:
+    db:
+      enabled: true  
+    diskspace:
+      enabled: true  
+    ping:
+      enabled: true  
+ 
+
 
 
 

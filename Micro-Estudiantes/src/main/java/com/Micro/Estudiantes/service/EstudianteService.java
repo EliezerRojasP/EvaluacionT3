@@ -3,6 +3,7 @@ package com.Micro.Estudiantes.service;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -27,30 +28,30 @@ public class EstudianteService {
 		return estudianteRepository.findAll();
 	}
 	
-	public Estudiante buscarEstudiantePorId(Long id){
-		return estudianteRepository.findById(id).orElse(null);
+	public Optional<Estudiante> buscarEstudiantePorId(Long id){
+		return estudianteRepository.findById(id);
 	}
 
-	public Estudiante registerOAuthEstudiante(String correo, String nombre){
-		Estudiante estudiante = estudianteRepository.findByEmail(correo);
+	public Estudiante registerOAuthEstudiante(String email, String name){
+		Estudiante estudiante = estudianteRepository.findByEmail(email);
 		
 		if (estudiante == null){
 			estudiante = new Estudiante();
-			estudiante.setCorreo(correo);
-			estudiante.setNombre(nombre);
+			estudiante.setEmail(email);
+			estudiante.setName(name);
 			estudianteRepository.save(estudiante);
 		}
 		
 		return estudiante;
 	}
 	
-	public String generateToken(String correo){
+	public String generateToken(String email){
 		String SECRET_KEY = "JWT_SECRET_KEY";
 		byte[] keyBytes = SECRET_KEY.getBytes(StandardCharsets.UTF_8);
 		SecretKey secretKey = new SecretKeySpec(keyBytes, SignatureAlgorithm.HS256.getJcaName());
 		
 		return Jwts.builder()
-				.setSubject(correo)
+				.setSubject(email)
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
 				.signWith(secretKey, SignatureAlgorithm.HS256)

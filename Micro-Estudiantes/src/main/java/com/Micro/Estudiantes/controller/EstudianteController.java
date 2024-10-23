@@ -1,6 +1,7 @@
 package com.Micro.Estudiantes.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ public class EstudianteController {
 	}
 	
 	@GetMapping("/{id}")
-	public Estudiante buscarEstudiantePorId(@PathVariable Long id){
-		return estudianteService.buscarEstudiantePorId(id);
-	}
+    public Optional<Estudiante> buscarEstudiantePorId(@PathVariable Long id) {
+        return estudianteService.buscarEstudiantePorId(id);
+    }
 }

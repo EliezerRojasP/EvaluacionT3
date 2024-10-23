@@ -6,7 +6,7 @@ spring:
     name: students-ms
 
   datasource:
-    url: jdbc:h2:mem:studentsdb
+    url: jdbc:h2:mem:estudiantedb;
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -16,11 +16,10 @@ spring:
       enabled: true
       path: /h2-console
 
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:schema.sql
-      data-locations: classpath:data.sql
+  jpa:
+    hibernate:
+      ddl-auto: update  
+    show-sql: true  
 
   security:
     oauth2:
@@ -29,7 +28,9 @@ spring:
           google:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
-            scope: openid, profile, email
+            scope: profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/google"
+            client-name: Google
         provider:
           google:
             authorization-uri: https://accounts.google.com/o/oauth2/auth
@@ -55,7 +56,8 @@ management:
     diskspace:
       enabled: true
     ping:
-      enabled: true
+      enabled: true		
+
 
 
 

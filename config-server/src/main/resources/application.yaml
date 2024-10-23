@@ -7,4 +7,23 @@ spring:
       server:
         git:
           uri: https://github.com/EliezerRojasP/EvaluacionT3
-          clone-on-start: true
+          clone-on-start: true    
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  
+  endpoint:
+    health:
+      show-details: always  
+  health:
+    db:
+      enabled: true  
+    diskspace:
+      enabled: true  
+    ping:
+      enabled: true  
+
+
+

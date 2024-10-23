@@ -6,16 +6,10 @@ spring:
     name: courses-ms
 
   datasource:
-    url: jdbc:h2:mem:testdb;
+    url: jdbc:h2:file:/data/h2/coursesdb;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: sa
     password:
-    
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:schema.sql
-      data-locations: classpath:data.sql
 
   h2:
     console:
@@ -44,6 +38,7 @@ management:
       enabled: true  
     ping:
       enabled: true
+
   
 
 
