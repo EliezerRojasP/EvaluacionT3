@@ -58,10 +58,12 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
-      - SPRING_DATASOURCE_URL=jdbc:h2:file:/data/h2/coursesdb;DB_CLOSE_ON_EXIT=FALSE  # Base de datos H2 en archivo
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - SPRING_H2_CONSOLE_SETTINGS_WEB_ALLOW_OTHERS=true  
     volumes:
-      - courses-data:/data  # Volumen persistente para H2
+      - courses-data:/data
     restart: always
+
 
   micro-estudiantes:
     build:
@@ -77,9 +79,9 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
-      - SPRING_DATASOURCE_URL=jdbc:h2:file:/data/h2/studentsdb;DB_CLOSE_ON_EXIT=FALSE  # Base de datos H2 en archivo
+      - SPRING_DATASOURCE_URL=jdbc:h2:file:/data/h2/studentsdb;DB_CLOSE_ON_EXIT=FALSE  
     volumes:
-      - students-data:/data  # Volumen persistente para H2
+      - students-data:/data  
     restart: always
   
 networks:
@@ -87,8 +89,8 @@ networks:
     driver: bridge
 
 volumes:
-  courses-data:  # Volumen para almacenar la base de datos de micro-cursos
-  students-data:  # Volumen para almacenar la base de datos de micro-estudiantes
+  courses-data:  
+  students-data: 
 
 
 
