@@ -1,5 +1,6 @@
 package com.Micro.cursos.entidades;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,7 +12,8 @@ public class Curso {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nombre;
-	private boolean habilidato;
+	@Column(name = "habilitado")
+	private boolean habilitado;
 	
 	public Long getId() {
 		return id;
@@ -25,10 +27,14 @@ public class Curso {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public boolean isHabilidato() {
-		return habilidato;
+	public boolean ishabilitado() {
+		return habilitado;
 	}
-	public void setHabilidato(boolean habilidato) {
-		this.habilidato = habilidato;
+	public void sethabilitado(boolean habilitado) {
+		this.habilitado = habilitado;
 	}
+	
+	public Curso() {
+	} 
+	
 }

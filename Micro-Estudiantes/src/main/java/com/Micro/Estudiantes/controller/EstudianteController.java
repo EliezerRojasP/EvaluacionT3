@@ -19,7 +19,7 @@ public class EstudianteController {
 	private EstudianteService estudianteService;
 	
 	@GetMapping
-	public List<Estudiante> listarEstudiantes(){
+	public List<Estudiante> listarEstudiante(){
 		return estudianteService.listarEstudiante();
 	}
 	
@@ -27,5 +27,4 @@ public class EstudianteController {
 	public Estudiante buscarEstudiantePorId(@PathVariable Long id){
 		return estudianteService.buscarEstudiantePorId(id);
 	}
-	
 }

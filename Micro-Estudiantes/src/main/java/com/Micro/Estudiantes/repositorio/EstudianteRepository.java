@@ -7,4 +7,5 @@ import com.Micro.Estudiantes.entidades.Estudiante;
 
 @Repository
 public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
+	Estudiante findByEmail(String email);
 }

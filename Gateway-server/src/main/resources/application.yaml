@@ -20,14 +20,14 @@ spring:
         locator:
           enabled: true  
       routes:
-        - id: cursos-service
-          uri: lb://micro-cursos 
+        - id: Micro-cursos
+          uri: lb://COURSES-MS
           predicates:
-            - Path=/cursos/**  
-        - id: estudiantes-service
-          uri: lb://micro-estudiantes  
+            - Path=/cursos/**
+        - id: Micro-Estudiantes
+          uri: lb://STUDENTS-MS
           predicates:
-            - Path=/estudiantes/** 
+            - Path=/estudiantes/**
 
   config:
     import: "optional:configserver:"  
